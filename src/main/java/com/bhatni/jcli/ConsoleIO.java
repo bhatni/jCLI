@@ -76,15 +76,6 @@ public class ConsoleIO implements Input, Output, ShellManageable {
         lastCommandOffset = completePrompt.length();
         
         String command = readLine(in);
-        
-//        StringBuilder command = new StringBuilder();
-//        String commandLine = in.readLine().trim();
-//        while (commandLine.endsWith("\\")) {
-//            command.append(commandLine.substring(0, commandLine.length()-1));
-//            command.append(" ");
-//            commandLine = in.readLine().trim();
-//        }
-//        command.append(commandLine);
 
         if (log != null) {
             log.println(command);
