@@ -9,7 +9,6 @@
  * to provide simple CLI for simple applications.
  * The name formed as follows: "CLI Shell" --> "CLIShe" --> "Cliche".
  */
-
 package com.bhatni.jcli;
 
 import com.bhatni.jcli.util.ArrayHashMultiMap;
@@ -19,11 +18,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Shell is the class interacting with user.
- * Provides the command loop.
- * All logic lies here.
+ * Shell is the class interacting with user. Provides the command loop. All
+ * logic lies here.
  *
  * @author ASG
  */
@@ -36,6 +36,7 @@ public class Shell {
     private String appName;
 
     public static class Settings {
+
         private final Input input;
         private final Output output;
         private final MultiMap<String, Object> auxHandlers;
@@ -53,13 +54,13 @@ public class Shell {
             allAuxHandlers.putAll(addAuxHandlers);
             return new Settings(input, output, allAuxHandlers, displayTime);
         }
-        
+
     }
 
     public Settings getSettings() {
         return new Settings(input, output, auxHandlers, displayTime);
     }
-    
+
     public void setSettings(Settings s) {
         input = s.input;
         output = s.output;
@@ -72,8 +73,9 @@ public class Shell {
     }
 
     /**
-     * Shell's constructor
-     * You probably don't need this one, see methods of the ShellFactory.
+     * Shell's constructor You probably don't need this one, see methods of the
+     * ShellFactory.
+     *
      * @see com.bhatni.jcli.ShellFactory
      *
      * @param s Settings object for the shell instance
@@ -99,6 +101,7 @@ public class Shell {
 
     /**
      * Call this method to get OutputConversionEngine used by the Shell.
+     *
      * @return a conversion engine.
      */
     public OutputConversionEngine getOutputConverter() {
@@ -109,6 +112,7 @@ public class Shell {
 
     /**
      * Call this method to get InputConversionEngine used by the Shell.
+     *
      * @return a conversion engine.
      */
     public InputConversionEngine getInputConverter() {
@@ -118,20 +122,19 @@ public class Shell {
     private MultiMap<String, Object> auxHandlers = new ArrayHashMultiMap<String, Object>();
     private List<Object> allHandlers = new ArrayList<Object>();
 
-
     /**
-     * Method for registering command hanlers (or providers?)
-     * You call it, and from then the Shell has all commands declare in
-     * the handler object.
-     * 
+     * Method for registering command hanlers (or providers?) You call it, and
+     * from then the Shell has all commands declare in the handler object.
+     *
      * This method recognizes if it is passed ShellDependent or ShellManageable
      * and calls corresponding methods, as described in those interfaces.
      *
      * @see com.bhatni.jcli.ShellDependent
      * @see com.bhatni.jcli.ShellManageable
-     * 
+     *
      * @param handler Object which should be registered as handler.
-     * @param prefix Prefix that should be prepended to all handler's command names.
+     * @param prefix Prefix that should be prepended to all handler's command
+     * names.
      */
     public void addMainHandler(Object handler, String prefix) {
         if (handler == null) {
@@ -144,18 +147,20 @@ public class Shell {
         outputConverter.addDeclaredConverters(handler);
 
         if (handler instanceof ShellDependent) {
-            ((ShellDependent)handler).cliSetShell(this);
+            ((ShellDependent) handler).cliSetShell(this);
         }
     }
 
     /**
-     * This method is very similar to addMainHandler, except ShellFactory
-     * will pass all handlers registered with this method to all this shell's subshells.
+     * This method is very similar to addMainHandler, except ShellFactory will
+     * pass all handlers registered with this method to all this shell's
+     * subshells.
      *
      * @see asg.cliche.Shell#addMainHandler(java.lang.Object, java.lang.String)
      *
      * @param handler Object which should be registered as handler.
-     * @param prefix Prefix that should be prepended to all handler's command names.
+     * @param prefix Prefix that should be prepended to all handler's command
+     * names.
      */
     public void addAuxHandler(Object handler, String prefix) {
         if (handler == null) {
@@ -169,7 +174,7 @@ public class Shell {
         outputConverter.addDeclaredConverters(handler);
 
         if (handler instanceof ShellDependent) {
-            ((ShellDependent)handler).cliSetShell(this);
+            ((ShellDependent) handler).cliSetShell(this);
         }
     }
 
@@ -187,7 +192,7 @@ public class Shell {
     /**
      * Returns last thrown exception
      */
-    @Command(description="Returns last thrown exception") // Shell is self-manageable, isn't it?
+    @Command(description = "Returns last thrown exception") // Shell is self-manageable, isn't it?
     public Throwable getLastException() {
         return lastException;
     }
@@ -203,24 +208,25 @@ public class Shell {
 
     /**
      * Function to allow changing path at runtime; use with care to not break
-     * the semantics of sub-shells (if you're using them) or use to emulate
-     * tree navigation without subshells
+     * the semantics of sub-shells (if you're using them) or use to emulate tree
+     * navigation without subshells
+     *
      * @param path New path
      */
     public void setPath(List<String> path) {
         this.path = path;
     }
-    
+
     /**
-     * Runs the command session.
-     * Create the Shell, then run this method to listen to the user,
-     * and the Shell will invoke Handler's methods.
+     * Runs the command session. Create the Shell, then run this method to
+     * listen to the user, and the Shell will invoke Handler's methods.
+     *
      * @throws java.io.IOException when can't readLine() from input.
      */
     public void commandLoop() throws IOException {
         for (Object handler : allHandlers) {
             if (handler instanceof ShellManageable) {
-                ((ShellManageable)handler).cliEnterLoop();
+                ((ShellManageable) handler).cliEnterLoop();
             }
         }
         output.output(appName, outputConverter);
@@ -241,7 +247,7 @@ public class Shell {
         }
         for (Object handler : allHandlers) {
             if (handler instanceof ShellManageable) {
-                ((ShellManageable)handler).cliLeaveLoop();
+                ((ShellManageable) handler).cliLeaveLoop();
             }
         }
     }
@@ -254,13 +260,13 @@ public class Shell {
         }
     }
 
-    private static final String HINT_FORMAT = "This is %1$s, running on Cliche Shell\n" +
-            "For more information on the Shell, enter ?help";
+    private static final String HINT_FORMAT = "This is %1$s, running on Cliche Shell\n"
+            + "For more information on the Shell, enter ?help";
 
     /**
-     * You can operate Shell linewise, without entering the command loop.
-     * All output is directed to shell's Output.
-     * 
+     * You can operate Shell linewise, without entering the command loop. All
+     * output is directed to shell's Output.
+     *
      * @see com.bhatni.jcli.Output
      *
      * @param line Full command line
@@ -276,20 +282,32 @@ public class Shell {
                 processCommand(discriminator, tokens);
             }
         }
-    }    
-    
-    private void processCommand(String discriminator, List<Token> tokens) throws CLIException {
-        assert discriminator != null;
-        assert ! discriminator.equals("");
+    }
 
-        ShellCommand commandToInvoke = commandTable.lookupCommand(discriminator, tokens);
+    private void processCommand(String discriminator, List<Token> tokens) throws TokenException, CLIException {
+        assert discriminator != null;
+        assert !discriminator.equals("");
+
+        ShellCommand commandToInvoke = null;
+        try {
+            commandToInvoke = commandTable.lookupCommand(discriminator, tokens);
+        } catch (CommandNotFoundForArgNumException ex) {
+            output.outputExceptionMessage(ex);
+            return;
+        } catch (AmbiguousCommandExcException ex) {
+            output.outputExceptionMessage(ex);
+            return;
+        } catch (CommandNotFoundException ex) {
+            output.outputExceptionMessage(ex);
+            return;
+        }
 
         Class[] paramClasses = commandToInvoke.getMethod().getParameterTypes();
         Object[] parameters = inputConverter.convertToParameters(tokens, paramClasses,
                 commandToInvoke.getMethod().isVarArgs());
 
         outputHeader(commandToInvoke.getHeader(), parameters);
-        
+
         long timeBefore = Calendar.getInstance().getTimeInMillis();
         Object invocationResult = commandToInvoke.invoke(parameters);
         long timeAfter = Calendar.getInstance().getTimeInMillis();
@@ -311,27 +329,25 @@ public class Shell {
 
     /**
      * Turns command execution time display on and off
+     *
      * @param displayTime true if do display, false otherwise
      */
-    @Command(description="Turns command execution time display on and off")
+    @Command(description = "Turns command execution time display on and off")
     public void setDisplayTime(
-            @Param(name="do-display-time", description="true if do display, false otherwise")
-            boolean displayTime) {
+            @Param(name = "do-display-time", description = "true if do display, false otherwise") boolean displayTime) {
         this.displayTime = displayTime;
     }
 
-
     /**
-     * Hint is some text displayed before the command loop and every time user enters "?".
+     * Hint is some text displayed before the command loop and every time user
+     * enters "?".
      */
     public void setAppName(String appName) {
         this.appName = appName;
     }
-    
+
     public String getAppName() {
         return appName;
     }
-
-
 
 }

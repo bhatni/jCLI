@@ -18,6 +18,8 @@ public interface Output {
 
     void outputException(Throwable e);
 
-    void outputHeader(String text);
+    void outputExceptionMessage(Throwable e);
+
+    void outputHeader(String text); 
 
 }

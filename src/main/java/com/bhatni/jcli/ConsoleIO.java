@@ -234,6 +234,12 @@ public class ConsoleIO implements Input, Output, ShellManageable {
             printlnErr(e.getCause());
         }
     }
+    public void outputExceptionMessage(Throwable e) {
+        err.println(e.getMessage());
+        if (log != null) {
+            log.println(e.getMessage());
+        }
+    }
     
     private PrintStream log = null;
 

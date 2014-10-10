@@ -89,7 +89,7 @@ public class CommandTable {
         return collectedTable;
     }
 
-    public ShellCommand lookupCommand(String discriminator, List<Token> tokens) throws CLIException {
+    public ShellCommand lookupCommand(String discriminator, List<Token> tokens) throws CommandNotFoundForArgNumException, AmbiguousCommandExcException, CommandNotFoundException {
         List<ShellCommand> collectedTable = commandsByName(discriminator);
         // reduction
         List<ShellCommand> reducedTable = new ArrayList<ShellCommand>();
@@ -101,12 +101,12 @@ public class CommandTable {
             }
         }
         // selection
-        if (collectedTable.size() == 0) {
-            throw CLIException.createCommandNotFound(discriminator);
+        if (collectedTable.isEmpty()) {
+            throw new CommandNotFoundException(discriminator);
         } else if (reducedTable.size() == 0) {
-            throw CLIException.createCommandNotFoundForArgNum(discriminator, tokens.size()-1);
+            throw new CommandNotFoundForArgNumException(discriminator, tokens.size()-1);
         } else if (reducedTable.size() > 1) {
-            throw CLIException.createAmbiguousCommandExc(discriminator, tokens.size()-1);
+            throw new AmbiguousCommandExcException(discriminator, tokens.size()-1);
         } else {
             return reducedTable.get(0);
         }

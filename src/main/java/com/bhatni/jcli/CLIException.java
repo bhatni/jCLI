@@ -12,10 +12,13 @@ package com.bhatni.jcli;
  * @author ASG
  */
 public class CLIException extends Exception {
+    
+    protected String commandName;
+    
     public CLIException() {
         super();
     }
-    public CLIException(String message) {
+    protected CLIException(String message) {
         super(message);
     }
     public CLIException(Throwable cause) {
@@ -25,17 +28,4 @@ public class CLIException extends Exception {
         super(message, cause);
     }
 
-    public static CLIException createCommandNotFound(String commandName) {
-        return new CLIException("Unknown command: " + Token.escapeString(commandName));
-    }
-
-    public static CLIException createCommandNotFoundForArgNum(String commandName, int argCount) {
-        return new CLIException("There's no command " + Token.escapeString(commandName)
-                + " taking " + argCount + " arguments");
-    }
-
-    public static CLIException createAmbiguousCommandExc(String commandName, int argCount) {
-        return new CLIException("Ambiguous command " + Token.escapeString(commandName)
-                + " taking " + argCount + " arguments");
-    }
 }
