@@ -1,6 +1,6 @@
 /*
- * This file is part of the Cliche project, licensed under MIT License.
- * See LICENSE.txt file in root folder of Cliche sources.
+ * This file is part of the jCLI project, licensed under MIT License.
+ * See LICENSE.txt file in root folder of jCLI sources.
  */
 
 package com.bhatni.jcli;
@@ -24,7 +24,7 @@ public class ShellFactory {
      *
      * Run the obtained Shell with commandLoop().
      *
-     * @see asg.cliche.Shell#Shell(asg.cliche.Shell.Settings, asg.cliche.CommandTable, java.util.List)
+     * @see asg.jCLI.Shell#Shell(asg.jCLI.Shell.Settings, asg.jCLI.CommandTable, java.util.List)
      *
      * @param prompt Prompt to be displayed
      * @param appName The app name string
@@ -59,7 +59,7 @@ public class ShellFactory {
      *
      * Run the obtained Shell with commandLoop().
      *
-     * @see asg.cliche.Shell#Shell(asg.cliche.Shell.Settings, asg.cliche.CommandTable, java.util.List)
+     * @see asg.jCLI.Shell#Shell(asg.jCLI.Shell.Settings, asg.jCLI.CommandTable, java.util.List)
      *
      * @param prompt Prompt to be displayed
      * @param appName The app name string
@@ -93,7 +93,7 @@ public class ShellFactory {
      *
      * Run the obtained Shell with commandLoop().
      *
-     * @see asg.cliche.Shell#Shell(asg.cliche.Shell.Settings, asg.cliche.CommandTable, java.util.List)
+     * @see asg.jCLI.Shell#Shell(asg.jCLI.Shell.Settings, asg.jCLI.CommandTable, java.util.List)
      *
      * @param prompt Prompt to be displayed
      * @param appName The app name string
@@ -104,6 +104,12 @@ public class ShellFactory {
         return createConsoleShell(prompt, appName, mainHandler, new EmptyMultiMap<String, Object>());
     }
 
+    public static Shell createConsoleShell(Class app) throws InstantiationException, IllegalAccessException {
+        AppInfo appinfo = new AppInfo(app);
+        return createConsoleShell(appinfo.getShellPrompt(), app.getName(), app.newInstance(), new EmptyMultiMap<String, Object>());
+    }
+    
+    
     /**
      * Facade method facilitating the creation of subshell.
      * Subshell is created and run inside Command method and shares the same IO and naming strategy.

@@ -1,6 +1,6 @@
 /*
- * This file is part of the Cliche project, licensed under MIT License.
- * See LICENSE.txt file in root folder of Cliche sources.
+ * This file is part of the jCLI project, licensed under MIT License.
+ * See LICENSE.txt file in root folder of jCLI sources.
  */
 
 package com.bhatni.jcli;
@@ -42,7 +42,7 @@ public class InputConversionEngine {
             Object conversionResult = currentConverter.convertInput(string, aClass);
             if (conversionResult != null) {
                 if (!aClass.isAssignableFrom(conversionResult.getClass())) {
-                    throw new CLIException("Registered asg.Cliche converter " +
+                    throw new CLIException("Registered asg.jCLI converter " +
                             currentConverter + " returns wrong result");
                 } else {
                     return conversionResult;

@@ -1,13 +1,13 @@
 /*
- * This file is part of the Cliche project, licensed under MIT License.
- * See LICENSE.txt file in root folder of Cliche sources.
+ * This file is part of the jCLI project, licensed under MIT License.
+ * See LICENSE.txt file in root folder of jCLI sources.
  */
 
 /*
- *   Introducing the asg.cliche (http://cliche.sourceforge.net/)
- * Cliche is to be a VERY simple reflection-based command line shell
+ *   Introducing the asg.jCLI (http://jCLI.sourceforge.net/)
+ * jCLI is to be a VERY simple reflection-based command line shell
  * to provide simple CLI for simple applications.
- * The name formed as follows: "CLI Shell" --> "CLIShe" --> "Cliche".
+ * The name formed as follows: "CLI Shell" --> "CLIShe" --> "jCLI".
  */
 package com.bhatni.jcli;
 
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class Shell {
 
-    public static String PROJECT_HOMEPAGE_URL = "http://cliche.sourceforge.net";
+    public static String PROJECT_HOMEPAGE_URL = "http://jCLI.sourceforge.net";
 
     private Output output;
     private Input input;
@@ -41,6 +41,7 @@ public class Shell {
         private final Output output;
         private final MultiMap<String, Object> auxHandlers;
         private final boolean displayTime;
+
 
         public Settings(Input input, Output output, MultiMap auxHandlers, boolean displayTime) {
             this.input = input;
@@ -156,7 +157,7 @@ public class Shell {
      * pass all handlers registered with this method to all this shell's
      * subshells.
      *
-     * @see asg.cliche.Shell#addMainHandler(java.lang.Object, java.lang.String)
+     * @see asg.jCLI.Shell#addMainHandler(java.lang.Object, java.lang.String)
      *
      * @param handler Object which should be registered as handler.
      * @param prefix Prefix that should be prepended to all handler's command
@@ -260,7 +261,7 @@ public class Shell {
         }
     }
 
-    private static final String HINT_FORMAT = "This is %1$s, running on Cliche Shell\n"
+    private static final String HINT_FORMAT = "This is %1$s, running on jCLI Shell\n"
             + "For more information on the Shell, enter ?help";
 
     /**

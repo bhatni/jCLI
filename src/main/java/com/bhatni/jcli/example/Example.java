@@ -93,7 +93,7 @@ public class Example implements ShellDependent {
 
 
     public static void main(String[] args) throws IOException {
-        ShellFactory.createConsoleShell("example", "The Cliche Shell example\n" +
+        ShellFactory.createConsoleShell("example", "The jCLI Shell example\n" +
                 "Enter ?l to list available commands.", new Example())
                 .commandLoop();
     }

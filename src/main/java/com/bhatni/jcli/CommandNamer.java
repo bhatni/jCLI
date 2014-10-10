@@ -1,6 +1,6 @@
 /*
- * This file is part of the Cliche project, licensed under MIT License.
- * See LICENSE.txt file in root folder of Cliche sources.
+ * This file is part of the jCLI project, licensed under MIT License.
+ * See LICENSE.txt file in root folder of jCLI sources.
  */
 
 package com.bhatni.jcli;
@@ -27,7 +27,7 @@ public interface CommandNamer {
      * take parameter types into account.
      *
      * @param commandMethod Command method
-     * @return asg.cliche.CommandNamer.NamingInfo containing generated name and abbrev array.
+     * @return asg.jCLI.CommandNamer.NamingInfo containing generated name and abbrev array.
      */
     NamingInfo nameCommand(Method commandMethod);
 

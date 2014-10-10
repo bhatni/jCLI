@@ -1,6 +1,6 @@
 /*
- * This file is part of the Cliche project, licensed under MIT License.
- * See LICENSE.txt file in root folder of Cliche sources.
+ * This file is part of the jCLI project, licensed under MIT License.
+ * See LICENSE.txt file in root folder of jCLI sources.
  */
 
 package com.bhatni.jcli;
@@ -74,8 +74,8 @@ public class Token {
      * @param input String to be tokenized
      * @return List of tokens
      *
-     * @see asg.cliche.Shell.Token
-     * @see asg.cliche.Shell.escapeString
+     * @see asg.jCLI.Shell.Token
+     * @see asg.jCLI.Shell.escapeString
      */
     /*package-private for tests*/
     static List<Token> tokenize(final String input) {
